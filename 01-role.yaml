@@ -5,7 +5,8 @@ metadata:
   name: default-trainee
 rules:
 - apiGroups: [""] # "" indicates the core API group
-  resources: ["pods"] # * for all resources
+  # resources: ["pods"] # * for all resources
+  resources: ["*"] # * for all resources
   verbs: ["get", "watch", "list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -29,7 +30,13 @@ roleRef:
 # Create Role with resources and actions
 # Create RoleBinding with user and role
 
+# Role and RoleBinding used to provide access to namespace level resources
+# ClusterRole and ClusterRoleBinding used to provide access to cluster level resources
+
 # kubectl apply -f 01-role.yaml
+
+# kubectl get role
+# kubectl get rolebinding
 
 # Refer 02-aws-auth.yaml for the below steps
 # Create User in AWS and map in ConfigMap

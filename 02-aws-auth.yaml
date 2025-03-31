@@ -50,6 +50,13 @@ metadata:
 
 # kubectl apply -f 02-aws-auth.yaml
 
+# command to check the aws-auth configmap
+# kubectl get configmap aws-auth -n kube-system -o yaml
+
+# aws eks update kubeconfig to get cluster access
+# https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html
+
+
 # steps to check the cluster acess to suresh user
 # --------------------------------------------------
 # create new EC2 for user suresh created in AWS and follow the steps below

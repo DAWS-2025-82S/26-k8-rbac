@@ -1,0 +1,40 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  # "namespace" omitted since ClusterRoles are not namespaced
+  name: default-trainee
+rules:
+- apiGroups: [""]
+  #
+  # at the HTTP level, the name of the resource for accessing Secret
+  # objects is "secrets"
+  resources: ["nodes","persistentvolumes"]
+  verbs: ["get", "watch", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+# This cluster role binding allows anyone in the "manager" group to read secrets in any namespace.
+kind: ClusterRoleBinding
+metadata:
+  name: default-trainee
+subjects:
+- kind: User
+  name: suresh # "name" is case sensitive
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: default-trainee
+  apiGroup: rbac.authorization.k8s.io
+
+# Added cluster role in separate file
+
+# Role and RoleBinding used to provide access to namespace level resources
+# ClusterRole and ClusterRoleBinding used to provide access to cluster level resources
+
+# kubectl apply -f 03-clusterrole.yaml
+
+# kubectl get role
+# kubectl get rolebinding
+
+# Refer 02-aws-auth.yaml for the below steps
+# Create User in AWS and map in ConfigMap
+# Create new Ec2 and check the access
