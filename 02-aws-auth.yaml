@@ -1,0 +1,65 @@
+apiVersion: v1
+data:
+  mapRoles: |
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      rolearn: arn:aws:iam::311141550186:role/eksctl-expense-nodegroup-expense-NodeInstanceRole-t2bjF8ejDwuE
+      username: system:node:{{EC2PrivateDNSName}}
+  mapUsers: |
+    - groups:
+      - default-trainee
+      # AWS USER ARN and User name
+      userarn: arn:aws:iam::311141550186:user/suresh
+      username: suresh
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2025-03-31T16:06:43Z"
+  name: aws-auth
+  namespace: kube-system
+  #resourceVersion: "1272"
+  uid: dd56b410-cb7b-43aa-835a-0a7afc9c88f4
+
+# Grant IAM Users access to kubernetes with configMap
+# https://docs.aws.amazon.com/eks/latest/userguide/auth-configmap.html  -- edit aws auth configmap
+ 
+
+# aws-auth configmap is used to map  EKS user with AWS IAM user
+# aws-auth configmap need to be configured to connect EKS and IAM user
+
+# Get the config map using the below command
+
+# kubectl get configmap aws-auth -n kube-system -o yaml
+
+# copy the output to aws-auth.yaml file and 
+# add AWS suresh user and ARN configurtaion to map EKS user with AWS user
+
+
+# Create User in AWS and update the ARN in ConfigMap
+# ---------------------------------------------------
+# create IAM policy with "ExpenseEKSDescribe" name in AWS
+# Add the EKS services and provide the "DescribeCluster" permissions/actions user can perform
+# 	Provide Region
+# 	Provide cluster name
+# 	ARN "arn:aws:eks:us-east-1:311141550186:cluster/expense" added automatically
+# create suresh user
+# Attach IAM policy to the user
+# create access key for suresh account
+
+# Update the user and ARN in ConfigMap in 02-aws-auth.yaml
+
+# kubectl apply -f 02-aws-auth.yaml
+
+# steps to check the cluster acess to suresh user
+# --------------------------------------------------
+# create new EC2 for user suresh created in AWS and follow the steps below
+# 	aws configure
+# 	aws eks update-kubeconfig --region us-east-1 --name expense  -- update aws eks config to get cluster access
+#     cat .kube/config 
+#   aws sts get-caller-identity
+# 	Install kubectl -- to interact with cluster
+
+# kubectl get pods
+# kubectl get pods -n kube-system
+# kubectl get nodes 
+# kubectl get services
