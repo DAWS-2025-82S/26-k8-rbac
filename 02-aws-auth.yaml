@@ -18,7 +18,7 @@ metadata:
   name: aws-auth
   namespace: kube-system
   #resourceVersion: "1272"
-  uid: dd56b410-cb7b-43aa-835a-0a7afc9c88f4
+  #uid: dd56b410-cb7b-43aa-835a-0a7afc9c88f4 # optional if provided it should be same as in aws-auth ConfigMap
 
 # Grant IAM Users access to kubernetes with configMap
 # https://docs.aws.amazon.com/eks/latest/userguide/auth-configmap.html  -- edit aws auth configmap
